@@ -4,68 +4,48 @@ import { Table } from 'antd';
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'Jim',
-        value: 'Jim',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-    sorter: (a, b) => a.name.length - b.name.length,
-    sortDirections: ['descend'],
+    title: 'Product Name',
+    dataIndex: 'name'
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
+    title: 'Quantity',
+    dataIndex: 'quantity',
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.age - b.age,
+    sorter: (a, b) => a.quantity - b.quantity,
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    filters: [
-      {
-        text: 'London',
-        value: 'London',
-      },
-      {
-        text: 'New York',
-        value: 'New York',
-      },
-    ],
-    onFilter: (value, record) => record.address.indexOf(value) === 0,
+    title: 'Price',
+    dataIndex: 'price'
   },
+  // {
+  //   title: 'Total price',
+  //   dataIndex: 'total'
+  // },
 ];
 const data = [
   {
     key: '1',
     name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    quantity: 32,
+    price: 9000,
   },
   {
     key: '2',
     name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    quantity: 42,
+    price: 10000,
   },
   {
     key: '3',
     name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    quantity: 32,
+    price: 3000,
   },
   {
     key: '4',
     name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
+    quantity: 32,
+    price: 12000,
   },
 ];
 
@@ -75,4 +55,18 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 const Tables = () => <Table columns={columns} dataSource={data} onChange={onChange} />;
 
-export default Tables;
+export default Tables; 
+
+// filters: [
+    //   {
+    //     text: 'Joe',
+    //     value: 'Joe',
+    //   },
+    //   {
+    //     text: 'Jim',
+    //     value: 'Jim',
+    //   },
+    // ],
+    // onFilter: (value, record) => record.name.indexOf(value) === 0,
+    // sorter: (a, b) => a.name.length - b.name.length,
+    // sortDirections: ['descend'],

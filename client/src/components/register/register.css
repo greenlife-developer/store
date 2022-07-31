@@ -20,39 +20,11 @@
     z-index: 0;
     border-radius: 5px;
     display: flex;
-    width: 600px; 
     padding: 15px 15px 45px 15px;
 }
 
-.login .forms-info{
-    margin-top: 0;
-}
-
-.login .forms-info img{
-    margin-bottom: 2px;
-    width: 100px;
-}
-
-.forms-info img{
-    margin-bottom: 10px;
-    width: 100px;
-}
-
-.forms-info{
-    margin-top: 1.3rem;
-}
-
-.forms-info span{
-    display: block;
-    text-align: left;
-    background-color: white;
-    border-radius: 5px;
-    font-size: 10px;
-    font-weight: bold;
-    margin: 10px;
-    padding: .5rem;
-    width: 250px;
-    box-shadow: 2px 2px 2px #aaaa;
+.add .signup-inputs{
+    width: 350px;
 }
 
 .form-name{
@@ -63,6 +35,8 @@
 
 input[type=submit]{
     margin-top: 20px;
+    padding: 0 !important;
+    box-shadow: none !important;
     font-weight: bold;
 }
 
@@ -109,6 +83,10 @@ input:focus{
 
     .forms-info{
         display: none;
+    }
+
+    .add .signup-inputs{
+        width: 100%;
     }
 
     #login .container-form{

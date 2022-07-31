@@ -5,3 +5,8 @@
 .store{
     margin-top: 1rem;
 }
+
+.right{
+    float: right;
+    margin-bottom: 1rem;
+}

@@ -44,12 +44,20 @@ export default function Navigation() {
                 <div>
                   <li>
                     <NavLink className="nav-links" to="/login">
-                      Login
+                      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                      <h6 className="btn-primary">Login</h6>
                     </NavLink>
                   </li>
                   <li>
                     <NavLink className="nav-links" to="/register">
-                      Register
+                      <i class="fa-solid fa-user-plus"></i>
+                      <h6 className="btn-primary">Register</h6>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink className="nav-links" to="/dashboard">
+                      <i class="fa-solid fa-gauge"></i>
+                      <h6 className="btn-primary">Dashboard</h6>
                     </NavLink>
                   </li>
                 </div>

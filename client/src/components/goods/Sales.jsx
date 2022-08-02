@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Navigation from "../Home/Navigation";
 
 export default function Sales() {
-
   return (
     <div className="registration add">
       <Navigation />
@@ -13,7 +12,7 @@ export default function Sales() {
             <div className="sign-up">
               <h2>Record new Sales</h2>
               <h6>
-                Go to <Link to="/dashboard">store</Link>
+                Go to <Link to="/api/dashboard">store</Link>
               </h6>
             </div>
             <form action="/new-product" method="post">
@@ -21,7 +20,15 @@ export default function Sales() {
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="product-name">Product Name</label>
-                    <input type="text" name="product-name" />
+                    <select
+                      className="sow"
+                      name="product-name"
+                    >
+                      <option value="Adeola">Adeola</option>
+                      <option value="Adeola">Adeola</option>
+                      <option value="Adeola">Adeola</option>
+                      <option value="Adeola">Adeola</option>
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="price">price</label>
@@ -32,7 +39,11 @@ export default function Sales() {
                     <input type="number" name="quantity" />
                   </div>
                   <div>
-                    <input type="submit" value="Record new sale" className="btn btn-primary" />
+                    <input
+                      type="submit"
+                      value="Record new sale"
+                      className="btn btn-primary"
+                    />
                   </div>
                 </div>
               </div>

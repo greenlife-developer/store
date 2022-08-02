@@ -23,7 +23,8 @@ export default function Navigation() {
     <div className="nav">
       <div className="logo">
         <Link to="/">
-          <img className="logo-img" src={logo} alt="" />
+          {/* <img className="logo-img" src={logo} alt="" /> */}
+          <h4 className="logo">EYOB</h4>
         </Link>
       </div>
       <div className="btn-group">
@@ -43,19 +44,19 @@ export default function Navigation() {
               <div className="user-login">
                 <div>
                   <li>
-                    <NavLink className="nav-links" to="/login">
+                    <NavLink className="nav-links" to="/api/login">
                       <i class="fa-solid fa-arrow-right-to-bracket"></i>
                       <h6 className="btn-primary">Login</h6>
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink className="nav-links" to="/register">
+                    <NavLink className="nav-links" to="/api/register">
                       <i class="fa-solid fa-user-plus"></i>
                       <h6 className="btn-primary">Register</h6>
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink className="nav-links" to="/dashboard">
+                    <NavLink className="nav-links" to="/api/dashboard">
                       <i class="fa-solid fa-gauge"></i>
                       <h6 className="btn-primary">Dashboard</h6>
                     </NavLink>

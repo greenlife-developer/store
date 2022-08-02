@@ -27,10 +27,10 @@ export default function Login() {
             <div className="sign-up">
               <h2>Welcome, please log in</h2>
               <h6>
-                Don't have an account? <Link to="/register">Sign Up</Link>
+                Don't have an account? <Link to="/api/register">Sign Up</Link>
               </h6>
             </div>
-            <form action="/login" method="post">
+            <form action="/api/login" method="post">
               <div className="form">
                 <div className="signup-inputs">
                   <div>

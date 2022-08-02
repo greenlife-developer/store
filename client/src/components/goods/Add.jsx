@@ -13,7 +13,7 @@ export default function Add() {
             <div className="sign-up">
               <h2>Add a new product</h2>
               <h6>
-                Go to my <Link to="/dashboard">store</Link>
+                Go to my <Link to="/api/dashboard">store</Link>
               </h6>
             </div>
             <form action="/new-product" method="post">

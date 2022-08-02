@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Tabs } from "antd";
 import { Link } from "react-router-dom";
 import "./dashboard.css";
-import Tables from "./Table";
+import Table from "./Table";
 import Sales from "./Sales";
 
 const { TabPane } = Tabs;
@@ -34,23 +34,27 @@ const Layout = () => {
         <TabPane tab="Store" key="1">
           <h1>All goods in shop</h1>
           <div className="store">
-            <div className="left">
-              <Link to="/new-product" className="btn btn-primary right">
+            <div className="right">
+              <Link to="/api/new-product" className="btn btn-primary">
                 Add product
               </Link>
             </div>
-            <Tables />
+            <div className="sales">
+              <Table />
+            </div>
           </div>
         </TabPane>
         <TabPane tab="Sales" key="2">
           <h1>Sales Record</h1>
           <div className="store">
-            <div className="left">
-              <Link to="/new-sales" className="btn btn-primary right">
+            <div className="right">
+              <Link to="/api/new-sales" className="btn btn-primary ">
                 New sale
               </Link>
             </div>
-            <Sales />
+            <div className="sales">
+              <Sales />
+            </div>
           </div>
         </TabPane>
       </Tabs>

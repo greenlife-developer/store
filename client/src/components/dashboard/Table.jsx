@@ -54,7 +54,7 @@ export default function Table() {
                 })
                 .map((item, id) => {
                   return (
-                    <Accordion>
+                    <Accordion key={id}>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -72,11 +72,21 @@ export default function Table() {
                         </div>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Suspendisse malesuada lacus ex, sit amet blandit
-                          leo lobortis eget.
-                        </Typography>
+                        <div className="accordion">
+                          <h1>{item.productName}</h1>
+                          <div className="">
+                            <label htmlFor="quantity">Quantity:</label>
+                            <span>{item.quantity}</span>
+                          </div>
+                          <div className="">
+                            <label htmlFor="price">Price:</label>
+                            <span>{item.price}</span>
+                          </div>
+                          <div className="">
+                            <label htmlFor="total">Total:</label>
+                            <span>{item.total}</span>
+                          </div>
+                        </div>
                       </AccordionDetails>
                     </Accordion>
                   );

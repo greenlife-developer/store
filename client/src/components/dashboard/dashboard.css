@@ -38,3 +38,14 @@
     text-align: left ;
 }
 
+/* ----------------------Accordion details ---------------------- */
+.accordion div{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+
+
+
+
+/* ----------------------Accordion details ---------------------- */

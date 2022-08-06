@@ -16,12 +16,12 @@ export default function Add() {
                 Go to my <Link to="/api/dashboard">store</Link>
               </h6>
             </div>
-            <form action="/new-product" method="post">
+            <form action="/api/new-product" method="post">
               <div className="form">
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="product-name">Product Name</label>
-                    <input type="text" name="product-name" />
+                    <input type="text" name="productName" />
                   </div>
                   <div>
                     <label htmlFor="price">price</label>

@@ -1,32 +1,57 @@
-import React from 'react';
-import 'antd/dist/antd.css';
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse } from 'antd';
+import { useState, useEffect } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const { Panel } = Collapse;
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+export default function Table() {
+  const [items, setItems] = useState(null);
 
-const Table = () => (
-  <Collapse
-    bordered={false}
-    defaultActiveKey={['1']}
-    expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-    className="site-collapse-custom-collapse"
-  >
-    <Panel header="This is panel header 1" key="1" className="site-collapse-custom-panel">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="This is panel header 2" key="2" className="site-collapse-custom-panel">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="This is panel header 3" key="3" className="site-collapse-custom-panel">
-      <p>{text}</p>
-    </Panel>
-  </Collapse>
-);
-
-export default Table;
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          setItems(data);
+        }
+      });
+  }, []);
+  return (
+    <div>
+      {items && items.items
+        ? items.items.map((item, id) => {
+            return (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <div className="header-items">
+                      <div className="item">{item.productName}</div>
+                      <div className="item">{item.quantity}</div>
+                    </div>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })
+        : "There are no goods in the store"}
+    </div>
+  );
+}
+ 

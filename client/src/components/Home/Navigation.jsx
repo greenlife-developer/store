@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import logo from "../images/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import "./nav.css";
 import { useEffect } from "react";
 
 export default function Navigation() {
-  //   const [isLogin, setIsLogin] = useState(false);
-  //   const [user, setUser] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
-  //   useEffect(() => {
-  //     fetch("/api")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data !== undefined) {
-  //         setIsLogin(true);
-  //         setUser(data);
-  //       }
-  //     });
-  //   }, [])
+  useEffect(() => {
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data !== undefined) {
+          setIsLogin(true);
+          setUser(data);
+        }
+      });
+  }, []);
 
   return (
     <div className="nav">
       <div className="logo">
         <Link to="/">
-          {/* <img className="logo-img" src={logo} alt="" /> */}
           <h4 className="logo">EYOB</h4>
         </Link>
       </div>
@@ -43,21 +41,34 @@ export default function Navigation() {
             <div className="users">
               <div className="user-login">
                 <div>
-                  <li>
-                    <NavLink className="nav-links" to="/api/login">
-                      <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                      <h6 className="btn-primary">Login</h6>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink className="nav-links" to="/api/register">
-                      <i class="fa-solid fa-user-plus"></i>
-                      <h6 className="btn-primary">Register</h6>
-                    </NavLink>
-                  </li>
+                  {isLogin && user.user ? (
+                    <div>
+                      <li>
+                        <Link className="nav-links" to="/api/logout">
+                          <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                          <h6>Logout</h6>
+                        </Link>
+                      </li>
+                    </div>
+                  ) : (
+                    <div>
+                      <li>
+                        <NavLink className="nav-links" to="/api/login">
+                          <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                          <h6 className="btn-primary">Login</h6>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className="nav-links" to="/api/register">
+                          <i className="fa-solid fa-user-plus"></i>
+                          <h6 className="btn-primary">Register</h6>
+                        </NavLink>
+                      </li>
+                    </div>
+                  )}
                   <li>
                     <NavLink className="nav-links" to="/api/dashboard">
-                      <i class="fa-solid fa-gauge"></i>
+                      <i className="fa-solid fa-gauge"></i>
                       <h6 className="btn-primary">Dashboard</h6>
                     </NavLink>
                   </li>

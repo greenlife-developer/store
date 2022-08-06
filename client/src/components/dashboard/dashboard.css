@@ -7,6 +7,15 @@
     position: relative
 }
 
+.store input{
+    border: none;
+    width: 150px;
+    margin-top: .5rem;
+    float: left;
+    padding-left: .5rem;
+    box-shadow: 2px 2px 2px 2px #ddd;
+}
+
 .right{
     float: right;
     position: relative;
@@ -20,24 +29,12 @@
     width: 100%;
 }
 
-.table{
-    border-bottom: 1px solid #f8f6f6;
+.header-items{
+    display: flex;
+    justify-content: space-between;
 }
 
-.table th{
-    padding: 1rem;
-    text-align: left;
+.header-items .item{
+    text-align: left ;
 }
 
-.table td{
-    padding: 1rem;
-    text-align: left;
-}
-
-.table td:nth-child(2){
-    background-color: #fafafa;
-}
-
-.table tr:hover{
-    background-color: #fafafa;
-}

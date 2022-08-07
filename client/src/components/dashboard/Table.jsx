@@ -47,7 +47,9 @@ export default function Table() {
                   if (keyword === "") {
                     return item;
                   } else if (
-                    item.productName.toLowerCase().includes(keyword.toLowerCase())
+                    item.productName
+                      .toLowerCase()
+                      .includes(keyword.toLowerCase())
                   ) {
                     return item;
                   }
@@ -86,8 +88,16 @@ export default function Table() {
                             <label htmlFor="total">Total:</label>
                             <span>{item.total}</span>
                           </div>
-                          <a className="btn btn-primary"><Link to="">Edit</Link></a>
-                          <a className="btn btn-secondary">Sell</a>
+                          <button className="btn btn-primary">
+                            <Link className="edit" to={`/api/edit/${item._id}`}>
+                              Edit
+                            </Link>
+                          </button>
+                          <button className="btn btn-secondary">
+                            <Link className="edit" to="">
+                              Sell
+                            </Link>
+                          </button>
                         </div>
                       </AccordionDetails>
                     </Accordion>

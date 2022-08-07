@@ -6,6 +6,7 @@ import Signup from "./components/register/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import Add from "./components/goods/Add";
 import Sales from "./components/goods/Sales";
+import Edit from "./components/goods/Edit"
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
           <Route path="api/register" element={<Signup />} />
           <Route path="api/dashboard" element={<Dashboard />} />
           <Route path="api/new-product" element={<Add />} />
+          <Route path="api/edit/:id" element={<Edit />} />
           <Route path="api/new-sales" element={<Sales />} />
-        </Routes>
+        </Routes> 
       </Router>
     </div>
   );

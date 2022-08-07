@@ -14,7 +14,7 @@ export default function Table() {
     fetch("/api/dashboard")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.items);
         if (data.items) {
           setItems(data.items);
         }
@@ -49,7 +49,7 @@ export default function Table() {
                 })
                 .map((item, id) => {
                   return (
-                    <Accordion>
+                    <Accordion key={id}>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -67,19 +67,28 @@ export default function Table() {
                         </div>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Suspendisse malesuada lacus ex, sit amet blandit
-                          leo lobortis eget.
-                        </Typography>
+                        <div className="accordion">
+                          <h3>{item.productName}</h3>
+                          <div className="">
+                            <label htmlFor="quantity">Quantity:</label>
+                            <span>{item.quantity}</span>
+                          </div>
+                          <div className="">
+                            <label htmlFor="price">Price:</label>
+                            <span>{item.price}</span>
+                          </div>
+                          <div className="">
+                            <label htmlFor="total">Total:</label>
+                            <span>{item.total}</span>
+                          </div>
+                        </div>
                       </AccordionDetails>
                     </Accordion>
                   );
                 })
-            : "No sale has been recorded"}
+            : "Nothing has been sold"}
         </div>
       </div>
     </div>
   );
 }
- 

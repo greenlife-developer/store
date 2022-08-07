@@ -105,6 +105,33 @@ http.listen(PORT, function () {
                     });
             });
 
+            app.get("/api/dashboard", (req, res) => {
+                database
+                    .collection("storeItems")
+                    .find()
+                    .sort({
+                        createdAt: -1,
+                    })
+                    .toArray((err, items) => {
+                        if (req.session.user_id) {
+                            getUser(req.session.user_id, function (user) {
+                                res.json({
+                                    isLogin: true,
+                                    query: req.query,
+                                    user: user,
+                                    items: items,
+                                });
+                            });
+                        } else {
+                            res.json({
+                                isLogin: false,
+                                query: req.query,
+                                items: items,
+                            });
+                        }
+                    });
+            });
+
             app.get("/api/register", (req, res) => {
                 res.json({
                     query: req.query,
@@ -206,31 +233,40 @@ http.listen(PORT, function () {
                 }
             });
 
-            app.get("/api/dashboard", (req, res) => {
-                database
-                    .collection("storeItems")
-                    .find()
-                    .sort({
-                        createdAt: -1,
+            app.get("/api/edit/:id", (req, res) => {
+                database.collection("storeItems").find(req.params.id, (product) => {
+                    if(!product){
+                        res.status(400).send("not found")
+                    }
+                    res.json({
+                        "product": product
                     })
-                    .toArray((err, items) => {
-                        if (req.session.user_id) {
-                            getUser(req.session.user_id, function (user) {
-                                res.json({
-                                    isLogin: true,
-                                    query: req.query,
-                                    user: user,
-                                    items: items,
-                                });
-                            });
-                        } else {
-                            res.json({
-                                isLogin: false,
-                                query: req.query,
-                                items: items,
-                            });
+                })
+            })
+
+            app.post("/api/edit/:id", (req, res) => {
+                console.log("edited",req.params.id)
+                if (req.session.user_id){
+                    getUser(req.session.user_id, (user) => {
+                        if(user.numer === "08065109764"){
+                            database.collection("storeItems").insertOne(
+                                {
+                                    productName: productName,
+                                    price: price,
+                                    quantity: quantity,
+                                    total: total
+                                },
+                                (err, data) => {
+                                    res.redirect("/api/dashboard?message=new-product");
+                                }
+                            );
+                        } else{
+                            res.send("<h1>Only the owner of the store can add products</h1>")
                         }
                     });
+                } else {
+                    res.send("<h1>Only logged in users can perform this action</h1>")
+                }
             });
 
             app.get("/api/logout", (req, res) => {

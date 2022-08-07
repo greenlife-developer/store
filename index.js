@@ -237,30 +237,27 @@ http.listen(PORT, function () {
         const result = await database
           .collection("storeItems")
           .findOne({ _id: ObjectId(req.params.id) });
-        console.log(result);
         res.json({
           product: result,
         });
       });
 
-      app.post("/api/edit/:id", async(req, res) => {
+      app.post("/api/edit/:id", async (req, res) => {
         const result = await database
           .collection("storeItems")
           .findOne({ _id: ObjectId(req.params.id) });
 
-        var myquery = { price: result.price };
-        var newvalues = { $set: { price: req.body.price } };
-        database
-          .collection("storeItems")
-          .updateOne(myquery, newvalues, function (err, res) {
-            if (err) throw err;
-            console.log("1 document updated");
-            database.close();
-          });
         if (req.session.user_id) {
           getUser(req.session.user_id, (user) => {
-            if (user.numer === "08065109764") {
-
+            if (user.number === "08065109764" || user.number === "09065109764") {
+              const myquery = { quantity: result.quantity};
+              const newvalues = { $set: { quantity: req.body.quantity, total: result.price * req.body.quantity  } };
+              database
+                .collection("storeItems")
+                .updateOne(myquery, newvalues, function (err, data) {
+                  if (err) throw err;
+                  res.redirect("/api/dashboard?success=new_update")
+                });
             } else {
               res.send("<h1>Only the owner of the store can add products</h1>");
             }

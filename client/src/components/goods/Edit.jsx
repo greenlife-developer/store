@@ -38,19 +38,19 @@ export default function Add() {
                     <label htmlFor="product-name">Product Name</label>
                     <input
                       type="text"
-                      value={item ? item.productName : ""}
+                      defaultValue={item ? item.productName : ""}
                       name="productName"
                     />
                   </div>
                   <div>
                     <label htmlFor="price">price</label>
-                    <input type="number" value={item ? item.price : ""} name="price" />
+                    <input type="number" defaultValue={item ? item.price : ""} name="price" />
                   </div>
                   <div>
                     <label htmlFor="quantity">Quantity</label>
-                    <input type="number" value={item ? item.quantity : ""} name="quantity" />
+                    <input type="number" defaultValue={item ? item.quantity : ""} name="quantity" />
                   </div>
-                  <div>
+                  <div> 
                     <input
                       type="submit"
                       value="Add new product"

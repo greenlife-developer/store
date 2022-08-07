@@ -20,15 +20,11 @@ export default function Sales() {
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="product-name">Product Name</label>
-                    <select
-                      className="sow"
-                      name="product-name"
-                    >
-                      <option value="Adeola">Adeola</option>
-                      <option value="Adeola">Adeola</option>
-                      <option value="Adeola">Adeola</option>
-                      <option value="Adeola">Adeola</option>
-                    </select>
+                    <input
+                      type="text"
+                      defaultValue={""}
+                      name="productName"
+                    />
                   </div>
                   <div>
                     <label htmlFor="price">price</label>

@@ -73,7 +73,7 @@ export default function Table() {
                       </AccordionSummary>
                       <AccordionDetails>
                         <div className="accordion">
-                          <h1>{item.productName}</h1>
+                          <h3>{item.productName}</h3>
                           <div className="">
                             <label htmlFor="quantity">Quantity:</label>
                             <span>{item.quantity}</span>
@@ -86,6 +86,8 @@ export default function Table() {
                             <label htmlFor="total">Total:</label>
                             <span>{item.total}</span>
                           </div>
+                          <a className="btn btn-primary"><Link to="">Edit</Link></a>
+                          <a className="btn btn-secondary">Sell</a>
                         </div>
                       </AccordionDetails>
                     </Accordion>

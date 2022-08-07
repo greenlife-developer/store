@@ -1,8 +1,8 @@
-require('dotenv').config({
-    path: './config_files/.env'
-})
+require("dotenv").config({
+  path: "./config_files/.env",
+});
 const express = require("express");
-const app = express(); 
+const app = express();
 
 const mongodb = require("mongodb");
 const ObjectId = mongodb.ObjectId;
@@ -21,12 +21,12 @@ app.use(express.json());
 
 const expressSession = require("express-session");
 app.use(
-    expressSession({
-        key: "user_id",
-        secret: "User secret object ID",
-        resave: true,
-        saveUninitialized: true,
-    })
+  expressSession({
+    key: "user_id",
+    secret: "User secret object ID",
+    resave: true,
+    saveUninitialized: true,
+  })
 );
 
 const bcrypt = require("bcrypt");
@@ -36,28 +36,28 @@ const { request } = require("http");
 app.use(bodyParser.json({ limit: "10000mb" }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
-    bodyParser.urlencoded({
-        extended: true,
-        limit: "10000mb",
-        parameterLimit: 1000000,
-    })
+  bodyParser.urlencoded({
+    extended: true,
+    limit: "10000mb",
+    parameterLimit: 1000000,
+  })
 );
 
 function getUser(userId, callBack) {
-    database.collection("users").findOne(
-        {
-            _id: ObjectId(userId),
-        },
-        function (error, result) {
-            if (error) {
-                console.log(error);
-                return;
-            }
-            if (callBack !== null) {
-                callBack(result);
-            }
-        }
-    );
+  database.collection("users").findOne(
+    {
+      _id: ObjectId(userId),
+    },
+    function (error, result) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      if (callBack !== null) {
+        callBack(result);
+      }
+    }
+  );
 }
 
 const db = require("./config_files/keys").mongoURI;
@@ -66,214 +66,214 @@ const db = require("./config_files/keys").mongoURI;
 const PORT = process.env.PORT || 5000;
 
 http.listen(PORT, function () {
-    console.log("Server has started...");
+  console.log("Server has started...");
 
-    mongoClient.connect(
-        db,
-        { useUnifiedTopology: true },
-        function (error, client) {
-            if (error) {
-                console.log(error);
-                return;
-            }
-            database = client.db("eyob");
+  mongoClient.connect(
+    db,
+    { useUnifiedTopology: true },
+    function (error, client) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      database = client.db("eyob");
 
-            app.get("/api", (req, res) => {
-                database
-                    .collection("users")
-                    .find()
-                    .sort({
-                        createdAt: -1,
-                    })
-                    .toArray((err, users) => {
-                        if (req.session.user_id) {
-                            getUser(req.session.user_id, function (user) {
-                                res.json({
-                                    isLogin: true,
-                                    query: req.query,
-                                    user: user,
-                                    users: users,
-                                });
-                            });
-                        } else {
-                            res.json({
-                                isLogin: false,
-                                query: req.query,
-                                users: users,
-                            });
-                        }
-                    });
-            });
-
-            app.get("/api/dashboard", (req, res) => {
-                database
-                    .collection("storeItems")
-                    .find()
-                    .sort({
-                        createdAt: -1,
-                    })
-                    .toArray((err, items) => {
-                        if (req.session.user_id) {
-                            getUser(req.session.user_id, function (user) {
-                                res.json({
-                                    isLogin: true,
-                                    query: req.query,
-                                    user: user,
-                                    items: items,
-                                });
-                            });
-                        } else {
-                            res.json({
-                                isLogin: false,
-                                query: req.query,
-                                items: items,
-                            });
-                        }
-                    });
-            });
-
-            app.get("/api/register", (req, res) => {
+      app.get("/api", (req, res) => {
+        database
+          .collection("users")
+          .find()
+          .sort({
+            createdAt: -1,
+          })
+          .toArray((err, users) => {
+            if (req.session.user_id) {
+              getUser(req.session.user_id, function (user) {
                 res.json({
-                    query: req.query,
+                  isLogin: true,
+                  query: req.query,
+                  user: user,
+                  users: users,
                 });
-            });
+              });
+            } else {
+              res.json({
+                isLogin: false,
+                query: req.query,
+                users: users,
+              });
+            }
+          });
+      });
 
-            app.post("/api/register", (req, res) => {
-                database.collection("users").findOne(
-                    {
-                        email: req.body.email,
-                    },
-                    (err, user) => {
-                        if (user === null) {
-                            bcrypt.hash(req.body.password, 10, (err, hash) => {
-                                database.collection("users").insertOne(
-                                    {
-                                        firstName: req.body.fName,
-                                        lastName: req.body.lName,
-                                        email: req.body.email,
-                                        number: req.body.number,
-                                        password: hash,
-                                    },
-                                    (err, data) => {
-                                        console.log(err);
-                                        res.redirect("/api/dashboard?message=registered");
-                                    }
-                                );
-                            });
-                        } else {
-                            res.redirect("/api/register?error=exists");
-                        }
-                    }
-                );
-            });
-
-            app.get("/api/login", (req, res) => {
-                console.log(req.query)
-                res.json({ 
-                    query: req.query,
+      app.get("/api/dashboard", (req, res) => {
+        database
+          .collection("storeItems")
+          .find()
+          .sort({
+            createdAt: -1,
+          })
+          .toArray((err, items) => {
+            if (req.session.user_id) {
+              getUser(req.session.user_id, function (user) {
+                res.json({
+                  isLogin: true,
+                  query: req.query,
+                  user: user,
+                  items: items,
                 });
-            });
+              });
+            } else {
+              res.json({
+                isLogin: false,
+                query: req.query,
+                items: items,
+              });
+            }
+          });
+      });
 
-            app.post("/api/login", (req, res) => {
-                const email = req.body.email;
-                const password = req.body.password;
+      app.get("/api/register", (req, res) => {
+        res.json({
+          query: req.query,
+        });
+      });
 
-                database.collection("users").findOne(
-                    {
-                        email: email,
-                    },
-                    (err, user) => {
-                        if (user === null) {
-                            res.redirect("/api/login?error=not_exists");
-                        } else {
-                            bcrypt.compare( 
-                                password,
-                                user.password,
-                                (err, isPasswordVerify) => { 
-                                    if (isPasswordVerify) {
-                                        req.session.user_id = user._id;
-                                        res.redirect("/api/dashboard");
-                                    } else {
-                                        res.redirect("/api/login?error=wrong_password");
-                                    }
-                                }
-                            );
-                        }
-                    }
+      app.post("/api/register", (req, res) => {
+        database.collection("users").findOne(
+          {
+            email: req.body.email,
+          },
+          (err, user) => {
+            if (user === null) {
+              bcrypt.hash(req.body.password, 10, (err, hash) => {
+                database.collection("users").insertOne(
+                  {
+                    firstName: req.body.fName,
+                    lastName: req.body.lName,
+                    email: req.body.email,
+                    number: req.body.number,
+                    password: hash,
+                  },
+                  (err, data) => {
+                    console.log(err);
+                    res.redirect("/api/dashboard?message=registered");
+                  }
                 );
-            });
+              });
+            } else {
+              res.redirect("/api/register?error=exists");
+            }
+          }
+        );
+      });
 
-            app.post("/api/new-product", (req, res) => {
-                const productName = req.body.productName
-                const price = req.body.price
-                const quantity = req.body.quantity
+      app.get("/api/login", (req, res) => {
+        console.log(req.query);
+        res.json({
+          query: req.query,
+        });
+      });
 
-                total = price*quantity
+      app.post("/api/login", (req, res) => {
+        const email = req.body.email;
+        const password = req.body.password;
 
-                if (req.session.user_id){
-                    getUser(req.session.user_id, (user) => {
-                        if(user.numer === "08065109764"){
-                            database.collection("storeItems").insertOne(
-                                {
-                                    productName: productName,
-                                    price: price,
-                                    quantity: quantity,
-                                    total: total
-                                },
-                                (err, data) => {
-                                    res.redirect("/api/dashboard?message=new-product");
-                                }
-                            );
-                        } else{
-                            res.send("<h1>Only the owner of the store can add products</h1>")
-                        }
-                    });
-                } else {
-                    res.send("<h1>Only logged in users can perform this action</h1>")
+        database.collection("users").findOne(
+          {
+            email: email,
+          },
+          (err, user) => {
+            if (user === null) {
+              res.redirect("/api/login?error=not_exists");
+            } else {
+              bcrypt.compare(
+                password,
+                user.password,
+                (err, isPasswordVerify) => {
+                  if (isPasswordVerify) {
+                    req.session.user_id = user._id;
+                    res.redirect("/api/dashboard");
+                  } else {
+                    res.redirect("/api/login?error=wrong_password");
+                  }
                 }
-            });
+              );
+            }
+          }
+        );
+      });
 
-            app.get("/api/edit/:id", (req, res) => {
-                database.collection("storeItems").find(req.params.id, (product) => {
-                    if(!product){
-                        res.status(400).send("not found")
-                    }
-                    res.json({
-                        "product": product
-                    })
-                })
-            })
+      app.post("/api/new-product", (req, res) => {
+        const productName = req.body.productName;
+        const price = req.body.price;
+        const quantity = req.body.quantity;
 
-            app.post("/api/edit/:id", (req, res) => {
-                console.log("edited",req.params.id)
-                if (req.session.user_id){
-                    getUser(req.session.user_id, (user) => {
-                        if(user.numer === "08065109764"){
-                            database.collection("storeItems").insertOne(
-                                {
-                                    productName: productName,
-                                    price: price,
-                                    quantity: quantity,
-                                    total: total
-                                },
-                                (err, data) => {
-                                    res.redirect("/api/dashboard?message=new-product");
-                                }
-                            );
-                        } else{
-                            res.send("<h1>Only the owner of the store can add products</h1>")
-                        }
-                    });
-                } else {
-                    res.send("<h1>Only logged in users can perform this action</h1>")
+        total = price * quantity;
+
+        if (req.session.user_id) {
+          getUser(req.session.user_id, (user) => {
+            if (user.numer === "08065109764") {
+              database.collection("storeItems").insertOne(
+                {
+                  productName: productName,
+                  price: price,
+                  quantity: quantity,
+                  total: total,
+                },
+                (err, data) => {
+                  res.redirect("/api/dashboard?message=new-product");
                 }
-            });
-
-            app.get("/api/logout", (req, res) => {
-                req.session.destroy();
-                res.redirect("/");
-            });
-
+              );
+            } else {
+              res.send("<h1>Only the owner of the store can add products</h1>");
+            }
+          });
+        } else {
+          res.send("<h1>Only logged in users can perform this action</h1>");
         }
-    );
+      });
+
+      app.get("/api/edit/:id", async (req, res) => {
+        const result = await database
+          .collection("storeItems")
+          .findOne({ _id: ObjectId(req.params.id) });
+        console.log(result);
+        res.json({
+          product: result,
+        });
+      });
+
+      app.post("/api/edit/:id", async(req, res) => {
+        const result = await database
+          .collection("storeItems")
+          .findOne({ _id: ObjectId(req.params.id) });
+
+        var myquery = { price: result.price };
+        var newvalues = { $set: { price: req.body.price } };
+        database
+          .collection("storeItems")
+          .updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+            database.close();
+          });
+        if (req.session.user_id) {
+          getUser(req.session.user_id, (user) => {
+            if (user.numer === "08065109764") {
+
+            } else {
+              res.send("<h1>Only the owner of the store can add products</h1>");
+            }
+          });
+        } else {
+          res.send("<h1>Only logged in users can perform this action</h1>");
+        }
+      });
+
+      app.get("/api/logout", (req, res) => {
+        req.session.destroy();
+        res.redirect("/");
+      });
+    }
+  );
 });

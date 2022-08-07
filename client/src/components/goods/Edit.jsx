@@ -5,18 +5,19 @@ import Navigation from "../Home/Navigation";
 export default function Add() {
   const location = useLocation();
   const actualLocation = location.pathname.split("/")[3];
-  const [item, setItem] = useState(null)
+  const [item, setItem] = useState(null);
 
   useEffect(() => {
     fetch(`/api/edit/${actualLocation}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.items) {
-          setItem(data);
+        console.log(data.product);
+        if (data) {
+          setItem(data.product);
         }
       });
   }, []);
+
 
   return (
     <div className="registration add">
@@ -35,15 +36,19 @@ export default function Add() {
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="product-name">Product Name</label>
-                    <input type="text" name="productName" />
+                    <input
+                      type="text"
+                      value={item ? item.productName : ""}
+                      name="productName"
+                    />
                   </div>
                   <div>
                     <label htmlFor="price">price</label>
-                    <input type="number" name="price" />
+                    <input type="number" value={item ? item.price : ""} name="price" />
                   </div>
                   <div>
                     <label htmlFor="quantity">Quantity</label>
-                    <input type="number" name="quantity" />
+                    <input type="number" value={item ? item.quantity : ""} name="quantity" />
                   </div>
                   <div>
                     <input

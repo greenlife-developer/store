@@ -131,6 +131,32 @@ http.listen(PORT, function () {
             }
           });
       });
+      app.get("/api/sales", (req, res) => {
+        database
+          .collection("salesItems")
+          .find()
+          .sort({
+            createdAt: -1,
+          })
+          .toArray((err, items) => {
+            if (req.session.user_id) {
+              getUser(req.session.user_id, function (user) {
+                res.json({
+                  isLogin: true,
+                  query: req.query,
+                  user: user,
+                  items: items,
+                });
+              });
+            } else {
+              res.json({
+                isLogin: false,
+                query: req.query,
+                items: items,
+              });
+            }
+          });
+      });
 
       app.get("/api/register", (req, res) => {
         res.json({
@@ -256,6 +282,42 @@ http.listen(PORT, function () {
                 .collection("storeItems")
                 .updateOne(myquery, newvalues, function (err, data) {
                   if (err) throw err;
+                  res.redirect("/api/dashboard?success=new_update")
+                });
+            } else {
+              res.send("<h1>Only the owner of the store can add products</h1>");
+            }
+          });
+        } else {
+          res.send("<h1>Only logged in users can perform this action</h1>");
+        }
+      });
+
+
+      app.post("/api/new-sales/:id", async (req, res) => {
+        const result = await database
+          .collection("storeItems")
+          .findOne({ _id: ObjectId(req.params.id) });
+
+        if (req.session.user_id) {
+          getUser(req.session.user_id, (user) => {
+            if (user.number === "08065109764" || user.number === "09065109764") {
+              const myquery = { quantity: result.quantity};
+              const total = req.body.price * req.body.quantity
+              const newQuantity = result.quantity - req.body.quantity
+              const newvalues = { $set: { quantity: newQuantity, total: result.price * newQuantity  } };
+              database
+                .collection("storeItems")
+                .updateOne(myquery, newvalues, function (err, data) {
+                  if (err) throw err;
+                  database.collection("salesItems").insertOne(
+                    {
+                      productName: req.body.productName,
+                      price: req.body.price,
+                      quantity: req.body.quantity,
+                      total: total,
+                    }
+                  );
                   res.redirect("/api/dashboard?success=new_update")
                 });
             } else {

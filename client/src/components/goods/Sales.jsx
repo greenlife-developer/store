@@ -1,8 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Navigation from "../Home/Navigation";
 
 export default function Sales() {
+
+  const location = useLocation();
+  const actualLocation = location.pathname.split("/")[3];
+  const [item, setItem] = useState(null);
+
+  useEffect(() => {
+    fetch(`/api/edit/${actualLocation}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.product);
+        if (data) {
+          setItem(data.product);
+        }
+      });
+  }, []);
+
   return (
     <div className="registration add">
       <Navigation />
@@ -15,14 +31,14 @@ export default function Sales() {
                 Go to <Link to="/api/dashboard">store</Link>
               </h6>
             </div>
-            <form action="/new-product" method="post">
+            <form action={"/api/new-sales/" + actualLocation} method="post">
               <div className="form">
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="product-name">Product Name</label>
                     <input
                       type="text"
-                      defaultValue={""}
+                      defaultValue={item ? item.productName : ""}
                       name="productName"
                     />
                   </div>

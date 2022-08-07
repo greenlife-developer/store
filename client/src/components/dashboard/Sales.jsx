@@ -11,7 +11,7 @@ export default function Table() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    fetch("/api/dashboard")
+    fetch("/api/sales")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.items);

@@ -94,7 +94,7 @@ export default function Table() {
                             </Link>
                           </button>
                           <button className="btn btn-secondary">
-                            <Link className="edit" to="">
+                            <Link className="edit" to={`/api/new-sales/${item._id}`}>
                               Sell
                             </Link>
                           </button>

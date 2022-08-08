@@ -273,7 +273,7 @@ http.listen(PORT, function () {
 
         if (req.session.user_id) {
           getUser(req.session.user_id, (user) => {
-            if (user.numer === "08065109764") {
+            if (user.number === "08065109764") {
               database.collection("storeItems").insertOne(
                 {
                   productName: productName,

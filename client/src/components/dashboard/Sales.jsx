@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function Table() {
@@ -42,7 +40,9 @@ export default function Table() {
                   if (keyword === "") {
                     return item;
                   } else if (
-                    item.productName.toLowerCase().includes(keyword.toLowerCase())
+                    item.productName
+                      .toLowerCase()
+                      .includes(keyword.toLowerCase())
                   ) {
                     return item;
                   }

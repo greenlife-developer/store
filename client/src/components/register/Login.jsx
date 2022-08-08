@@ -35,11 +35,11 @@ export default function Login() {
                 <div className="signup-inputs">
                   <div>
                     <label htmlFor="Email">Email</label>
-                    <input type="email" name="email" id="" />
+                    <input type="email" name="email" />
                   </div>
                   <div>
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" id="" />
+                    <input type="password" name="password" />
                   </div>
                   <div>
                     <input

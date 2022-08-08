@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
-import { Link } from "react-router-dom";
 import "./dashboard.css";
 import Table from "./Table";
 import Sales from "./Sales";
@@ -9,22 +8,12 @@ import Sales from "./Sales";
 const { TabPane } = Tabs;
 
 const Layout = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  //choose the screen size
-  const handleResize = () => {
-    if (window.innerWidth <= 425) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  // create an event listener
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  let isMobile = false
+  if (window.innerWidth <= 425) {
+    isMobile = true
+  } else {
+    isMobile = false
+  }
 
   return (
     <div className="container-fluid dashboard">

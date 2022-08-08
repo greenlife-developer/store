@@ -7,6 +7,7 @@ const app = express();
 const mongodb = require("mongodb");
 const ObjectId = mongodb.ObjectId;
 const mongoClient = mongodb.MongoClient;
+const path = require("path")
 
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.json());
@@ -19,9 +20,16 @@ let http = require("http").createServer(app);
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.json());
 
-const expressSession = require("express-session");
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  });
+ }
+
+const cookieSession = require("cookie-session");
 app.use(
-  expressSession({
+  cookieSession({
     key: "user_id",
     secret: "User secret object ID",
     resave: true,

@@ -8,7 +8,7 @@ export default function Add() {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/edit/${actualLocation}`)
+    fetch("/api/edit/"+actualLocation)
       .then((res) => res.json())
       .then((data) => {
         console.log(data.product);

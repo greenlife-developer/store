@@ -14,12 +14,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Nav />} />
-          <Route path="api/login" element={<Login />} />
-          <Route path="api/register" element={<Signup />} />
-          <Route path="api/dashboard" element={<Dashboard />} />
-          <Route path="api/new-product" element={<Add />} />
-          <Route path="api/edit/:id" element={<Edit />} />
-          <Route path="api/new-sales/:id" element={<Sales />} />
+          <Route path="/api/login" element={<Login />} />
+          <Route path="/api/register" element={<Signup />} />
+          <Route path="/api/dashboard" element={<Dashboard />} />
+          <Route path="/api/new-product" element={<Add />} />
+          <Route path="/api/edit/:id" element={<Edit />} />
+          <Route path="/api/new-sales/:id" element={<Sales />} />
         </Routes> 
       </Router>
     </div>

@@ -9,7 +9,7 @@ export default function Sales() {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/edit/${actualLocation}`)
+    fetch("/api/edit/"+actualLocation)
       .then((res) => res.json())
       .then((data) => {
         console.log(data.product);
@@ -38,7 +38,7 @@ export default function Sales() {
                     <label htmlFor="product-name">Product Name</label>
                     <input
                       type="text"
-                      defaultValue={item ? item.productName : ""}
+                      value={item ? item.productName : ""}
                       name="productName"
                     />
                   </div>

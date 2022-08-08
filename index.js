@@ -20,12 +20,9 @@ let http = require("http").createServer(app);
 app.use("/public", express.static(__dirname + "/public"));
 app.use(express.json());
 
-if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-  });
- }
+__dirname = path.resolve()
+app.use(express.static(path.join(__dirname, "/client/build")));
+
 
 const cookieSession = require("cookie-session");
 app.use(
@@ -86,34 +83,13 @@ http.listen(PORT, function () {
       }
       database = client.db("eyob");
 
-      app.get("/api", (req, res) => {
-        database
-          .collection("users")
-          .find()
-          .sort({
-            createdAt: -1,
-          })
-          .toArray((err, users) => {
-            if (req.session.user_id) {
-              getUser(req.session.user_id, function (user) {
-                res.json({
-                  isLogin: true,
-                  query: req.query,
-                  user: user,
-                  users: users,
-                });
-              });
-            } else {
-              res.json({
-                isLogin: false,
-                query: req.query,
-                users: users,
-              });
-            }
-          });
-      });
+      if (process.env.NODE_ENV === "production") {
+        app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+        });
+      }
 
-      app.get("/", (req, res) => {
+      app.get("/api", (req, res) => {
         database
           .collection("users")
           .find()
@@ -166,6 +142,7 @@ http.listen(PORT, function () {
             }
           });
       });
+      
       app.get("/api/sales", (req, res) => {
         database
           .collection("salesItems")

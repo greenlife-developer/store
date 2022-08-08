@@ -113,6 +113,33 @@ http.listen(PORT, function () {
           });
       });
 
+      app.get("/", (req, res) => {
+        database
+          .collection("users")
+          .find()
+          .sort({
+            createdAt: -1,
+          })
+          .toArray((err, users) => {
+            if (req.session.user_id) {
+              getUser(req.session.user_id, function (user) {
+                res.json({
+                  isLogin: true,
+                  query: req.query,
+                  user: user,
+                  users: users,
+                });
+              });
+            } else {
+              res.json({
+                isLogin: false,
+                query: req.query,
+                users: users,
+              });
+            }
+          });
+      });
+
       app.get("/api/dashboard", (req, res) => {
         database
           .collection("storeItems")

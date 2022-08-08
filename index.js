@@ -68,13 +68,13 @@ function getUser(userId, callBack) {
   );
 }
 
-const db = require("./config_files/keys").mongoURI;
+const db = process.env.MONGO_URI;
 // const db = "mongodb://localhost:27017";
 
 const PORT = process.env.PORT || 5000;
 
 http.listen(PORT, function () {
-  console.log("Server has started...");
+  console.log("Server has started on port " + PORT + " ...");
 
   mongoClient.connect(
     db,

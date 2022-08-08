@@ -16,7 +16,7 @@ export default function Add() {
           setItem(data.product);
         }
       });
-  }, []);
+  });
 
 
   return (

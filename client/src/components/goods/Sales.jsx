@@ -17,7 +17,7 @@ export default function Sales() {
           setItem(data.product);
         }
       });
-  }, []);
+  });
 
   return (
     <div className="registration add">

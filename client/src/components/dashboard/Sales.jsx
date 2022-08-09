@@ -44,8 +44,8 @@ export default function Table() {
                       .toLowerCase()
                       .includes(keyword.toLowerCase())
                   ) {
-                    return item;
                   }
+                  return "";
                 })
                 .map((item, id) => {
                   return (

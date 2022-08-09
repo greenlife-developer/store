@@ -52,6 +52,7 @@ export default function Table() {
                   ) {
                     return item;
                   }
+                  return ""
                 })
                 .map((item, id) => {
                   return (

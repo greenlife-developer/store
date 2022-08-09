@@ -133,10 +133,10 @@ mongoClient.connect(
         router.post("/register", (req, res) => {
             database.collection("users").findOne(
                 {
-                    email: req.body.email,
+                    number: req.body.number,
                 },
                 (err, user) => {
-                    if (user === null) {
+                    if (user === null ) {
                         bcrypt.hash(req.body.password, 10, (err, hash) => {
                             database.collection("users").insertOne(
                                 {

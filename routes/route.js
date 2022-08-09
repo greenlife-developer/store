@@ -230,7 +230,7 @@ mongoClient.connect(
                 .collection("storeItems")
                 .findOne({ _id: ObjectId(req.params.id) });
             res.json({
-                product: result,
+                product: result, 
             });
         });
 

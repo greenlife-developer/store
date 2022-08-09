@@ -53,7 +53,7 @@ export default function Add() {
                   <div> 
                     <input
                       type="submit"
-                      value="Add new product"
+                      value="Edit product"
                       className="btn btn-primary"
                     />
                   </div>

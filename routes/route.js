@@ -242,8 +242,8 @@ mongoClient.connect(
             if (req.session.user_id) {
                 getUser(req.session.user_id, (user) => {
                     if (user.number === "08065109764" || user.number === "09065109764") {
-                        const myquery = { quantity: result.quantity };
-                        const newvalues = { $set: { quantity: req.body.quantity, total: result.price * req.body.quantity } };
+                        const myquery = { quantity: result.quantity, price: result.price };
+                        const newvalues = { $set: { quantity: req.body.quantity, price: req.body.price, total: req.body.price * req.body.quantity } };
                         database
                             .collection("storeItems")
                             .updateOne(myquery, newvalues, function (err, data) {
